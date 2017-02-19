@@ -1,10 +1,19 @@
 from rest_framework import permissions
 from rest_framework import viewsets
 
-from backend.trips.models import Trip
+from backend.trips.models import Trip, Deal
 from backend.users.models import User
 from .permissions import IsOwner
-from .serializers import TripSerializer, UserSerializer
+from .serializers import TripSerializer, UserSerializer, DealSerializer
+
+
+class DealViewSet(viewsets.ModelViewSet):
+    """
+    This endpoint presents Deals.
+    """
+    queryset = Deal.objects.all()
+    serializer_class = DealSerializer
+    permission_classes = (permissions.IsAuthenticated,)
 
 
 class TripViewSet(viewsets.ModelViewSet):

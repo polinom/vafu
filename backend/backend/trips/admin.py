@@ -3,10 +3,16 @@ from __future__ import absolute_import, unicode_literals
 
 from django.contrib import admin
 
-from .models import Trip
+from .models import Trip, Deal
+
+
+@admin.register(Deal)
+class DealAdmin(admin.ModelAdmin):
+    list_display = ['title']
+    search_fields = ['title']
 
 
 @admin.register(Trip)
-class ArticleAdmin(admin.ModelAdmin):
+class TripAdmin(admin.ModelAdmin):
     list_display = ['owner', 'title', 'created_at']
     search_fields = ['owner__username', 'title']

@@ -8,6 +8,7 @@ from . import views
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
+router.register(r'deals', views.DealViewSet)
 router.register(r'trips', views.TripViewSet)
 router.register(r'users', views.UserViewSet)
 
