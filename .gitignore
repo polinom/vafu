@@ -93,3 +93,4 @@ backend/media/
 backend/.cache
 
 staticfiles/
+/backend/compose/nginx/dhparams.pem
