@@ -21,6 +21,12 @@ urlpatterns = [
 
     # Your stuff: custom urls includes go here
 
+    # REST API
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
+    # Include login URLs for the browsable API.
+    url(r'^api/', include('backend.api.urls', namespace='api')),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

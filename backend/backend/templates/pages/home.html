@@ -1,1 +1,5 @@
-{% extends "base.html" %}
+{% if request.user.is_authenticated %}
+    {% include "pages/home_for_members.html" %}
+{% else %}
+    {% include "pages/home_for_guests.html" %}
+{% endif %}
