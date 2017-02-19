@@ -1,16 +1,17 @@
 from rest_framework import serializers
 
-from backend.trips.models import Trip
+from backend.trips.models import Trip, Deal
 from backend.users.models import User
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class DealSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = User
-        fields = ('url', 'username', 'trips')
+        model = Deal
+        fields = (
+            'url', 'title', 'description', 'destination_country', 'seller_name', 'price',
+        )
         extra_kwargs = {
-            'url': {'view_name': 'api:user-detail'},
-            'trips': {'view_name': 'api:trip-detail'}
+            'url': {'view_name': 'api:deal-detail'}
         }
 
 
@@ -25,4 +26,14 @@ class TripSerializer(serializers.HyperlinkedModelSerializer):
         )
         extra_kwargs = {
             'url': {'view_name': 'api:trip-detail'}
+        }
+
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ('url', 'username', 'trips')
+        extra_kwargs = {
+            'url': {'view_name': 'api:user-detail'},
+            'trips': {'view_name': 'api:trip-detail'}
         }
