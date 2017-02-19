@@ -29,6 +29,34 @@
   }
 }
 
+.img-responsive {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.row.center h1, .row.center h2, .row.center p, .jumbotron h1, .jumbotron p {
+  text-align: center;
+}
+
+.navbar .navbar-inner.center {
+  padding-left: 0;
+  list-style: none;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .navbar .navbar-inner.center {
+    width: 50%;
+  }
+}
+
+.footer {
+  padding: 30px;
+  background-color: #eceeef;
+}
+
 /* Display django-debug-toolbar.
    See https://github.com/django-debug-toolbar/django-debug-toolbar/issues/742
    and https://github.com/pydanny/cookiecutter-django/issues/317
