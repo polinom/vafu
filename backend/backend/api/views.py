@@ -1,5 +1,4 @@
-from rest_framework import permissions
-from rest_framework import viewsets
+from rest_framework import permissions, viewsets
 
 from backend.trips.models import Trip, Deal, Favorite
 from backend.users.models import User
@@ -13,7 +12,6 @@ class DealViewSet(viewsets.ModelViewSet):
     """
     queryset = Deal.objects.all()
     serializer_class = DealSerializer
-    permission_classes = (permissions.IsAuthenticated,)
 
 
 class FavoriteViewSet(viewsets.ModelViewSet):
