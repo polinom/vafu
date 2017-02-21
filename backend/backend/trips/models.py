@@ -3,7 +3,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from backend.users.models import User
-from .behaviors import Timestampable
+from .behaviors import Timestampable, Timestampable2
 
 
 class Deal(models.Model):
@@ -25,6 +25,19 @@ class Deal(models.Model):
     class Meta:
         verbose_name = _('deal')
         verbose_name_plural = _('deals')
+
+
+class Favorite(Timestampable2, models.Model):
+    owner = models.ForeignKey(User, related_name='favorites')
+    deal = models.ForeignKey(Deal, related_name='deals')
+
+    def get_absolute_url(self):
+        return reverse('favorites:detail', kwargs={'id': self.id})
+
+    class Meta:
+        ordering = ('-created_at',)
+        verbose_name = _('favorite')
+        verbose_name_plural = _('favorites')
 
 
 class Trip(Timestampable, models.Model):
