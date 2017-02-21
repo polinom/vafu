@@ -8,6 +8,7 @@ from .behaviors import Timestampable, Timestampable2
 
 class Deal(models.Model):
     title = models.CharField(_('title'), max_length=100, blank=True)
+    image = models.URLField(_('image'), max_length=255, blank=True)
     description = models.TextField(_('description'), blank=True)
 
     destination_country = models.DecimalField(

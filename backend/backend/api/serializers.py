@@ -7,7 +7,7 @@ from backend.users.models import User
 class DealSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Deal
-        fields = ('url', 'title', 'description', 'destination_country', 'seller_name', 'price',)
+        fields = ('url', 'title', 'image', 'description', 'destination_country', 'seller_name', 'price',)
         extra_kwargs = {
             'url': {'view_name': 'api:deal-detail'}
         }
