@@ -1,9 +1,11 @@
 from rest_framework import permissions, viewsets
+from rest_framework import status
+from rest_framework.response import Response
 
 from backend.trips.models import Trip, Deal, Favorite
 from backend.users.models import User
 from .permissions import IsOwner
-from .serializers import TripSerializer, UserSerializer, DealSerializer, FavoriteSerializer
+from .serializers import TripSerializer, UserSerializer, DealSerializer, FavoriteSerializer, FavoriteCreateSerializer
 
 
 class DealViewSet(viewsets.ModelViewSet):
@@ -12,6 +14,21 @@ class DealViewSet(viewsets.ModelViewSet):
     """
     queryset = Deal.objects.all()
     serializer_class = DealSerializer
+
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        queryset = Deal.objects.all()
+
+        section = self.request.query_params.get('section', None)
+        if section == 'favorites':
+            queryset = queryset.filter(favorited_users__owner_id=self.request.user.id)
+        elif section:
+            queryset = queryset.none()
+
+        return queryset
 
 
 class FavoriteViewSet(viewsets.ModelViewSet):
@@ -23,8 +40,23 @@ class FavoriteViewSet(viewsets.ModelViewSet):
     serializer_class = FavoriteSerializer
     permission_classes = (permissions.IsAuthenticated, IsOwner)
 
+    # We overwrite create methods in order to build a Favorite object using "request.user" and received "deal_id"
+    def create(self, request, *args, **kwargs):
+        serializer = FavoriteCreateSerializer(data={
+            'owner_id': self.request.user.id,
+            'deal_id': self.request.data['deal_id'],
+        })
+
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        serializer.save(
+            owner_id=self.request.user.id,
+            deal_id=self.request.data['deal_id'],
+        )
 
 
 class TripViewSet(viewsets.ModelViewSet):
@@ -47,3 +79,11 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    def get_object(self):
+        pk = self.kwargs.get('pk')
+
+        if pk == "current":
+            return self.request.user
+
+        return super(UserViewSet, self).get_object()

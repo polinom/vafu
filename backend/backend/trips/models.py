@@ -29,8 +29,8 @@ class Deal(models.Model):
 
 
 class Favorite(Timestampable2, models.Model):
-    owner = models.ForeignKey(User, related_name='favorites')
-    deal = models.ForeignKey(Deal, related_name='deals')
+    owner = models.ForeignKey(User, related_name='favorite_deals')
+    deal = models.ForeignKey(Deal, related_name='favorited_users')
 
     def get_absolute_url(self):
         return reverse('favorites:detail', kwargs={'id': self.id})
@@ -39,6 +39,10 @@ class Favorite(Timestampable2, models.Model):
         ordering = ('-created_at',)
         verbose_name = _('favorite')
         verbose_name_plural = _('favorites')
+
+        unique_together = (
+            ('deal', 'owner'),
+        )
 
 
 class Trip(Timestampable, models.Model):

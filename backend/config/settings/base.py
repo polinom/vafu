@@ -15,6 +15,11 @@ import environ
 ROOT_DIR = environ.Path(__file__) - 3  # (backend/config/settings/common.py - 3 = backend/)
 APPS_DIR = ROOT_DIR.path('backend')
 
+FRONTEND_PATHS = (
+    str((ROOT_DIR - 1).path('frontend/build')),
+    str((ROOT_DIR - 1).path('frontend/build/static')),
+)
+
 # Load operating system environment variables and then prepare to use them
 env = environ.Env()
 
@@ -196,6 +201,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     str(APPS_DIR.path('static')),
 ]
+STATICFILES_DIRS += FRONTEND_PATHS
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
 STATICFILES_FINDERS = [
@@ -275,6 +281,6 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissions'
+        'rest_framework.permissions.IsAuthenticated'
     ],
 }

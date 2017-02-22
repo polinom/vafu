@@ -1,0 +1,86 @@
+.Card-container {
+  margin: 0 auto;
+  width: 100%;
+}
+
+.Card {
+  display: inline-block;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.19), 0 3px 3px rgba(0, 0, 0, 0.23);
+  position: relative;
+  transition: all .2s ease-in-out;
+  margin-bottom: 25px;
+}
+
+.Card:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.Card-image {
+  opacity: .7;
+  overflow: hidden;
+  transition: all .2s ease-in-out;
+  height: 240px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.Card-image:hover,
+.Card:hover .Card-image {
+  opacity: 1;
+}
+
+.Card-header {
+  padding: 0 0 10px 0;
+  margin: 0;
+  font-size: 20px;
+  max-width: 180px;
+}
+
+.Card-subheader {
+  font-size: 18px;
+}
+
+.Card-text {
+  background: #FFF;
+  padding: 20px;
+  font-size: 14px;
+  min-height: 200px;
+}
+
+.Card-text p {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+.Card-fab {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  position: absolute;
+  margin-top: -14px;
+  right: 6px;
+  color: #fff;
+  font-size: 42px;
+  line-height: 42px;
+  text-align: center;
+}
+
+.Card-favorited-true {
+  right: 10px;
+  margin-top: -10px;
+}
+
+.Card-favorited-true:before {
+  content: '\1F49B';
+  color: #0f0f0f;
+}
+
+.Card-favorited-false:before {
+  content: '\2661';
+  color: #0f0f0f;
+}
+
+.Card-fab:hover {
+  background: #ffffcc;
+  cursor: pointer;
+}
