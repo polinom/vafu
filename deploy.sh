@@ -10,6 +10,10 @@ eval "$(ssh-agent -s)" || true
 ssh-add ~/.ssh/id_rsa || true
 git pull || true
 
+# frontend
+cd /home/deploy/vacation-fund/frontend
+yarn run build
+
 # backend
 cd /home/deploy/vacation-fund/backend
 docker-compose down || true
