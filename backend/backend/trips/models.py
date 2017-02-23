@@ -11,11 +11,10 @@ class Deal(models.Model):
     image = models.URLField(_('image'), max_length=255, blank=True)
     description = models.TextField(_('description'), blank=True)
 
-    destination_country = models.DecimalField(
-        _('destination country'), null=True, blank=True, max_digits=13, decimal_places=4)
+    destination_country = models.CharField(_('destination country'), max_length=100, blank=True)
 
     seller_name = models.CharField(_('seller name'), max_length=255, blank=True)
-    price = models.IntegerField(_('price'), null=True, blank=True)
+    price = models.DecimalField(_('price'), max_digits=13, decimal_places=4, null=True, blank=True)
 
     def __str__(self):
         return self.title
