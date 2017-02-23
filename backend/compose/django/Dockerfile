@@ -3,17 +3,21 @@ FROM python:3.5
 ENV PYTHONUNBUFFERED 1
 
 # Requirements have to be pulled and installed here, otherwise caching won't work
-COPY ./requirements /requirements
+COPY ./backend/requirements /requirements
 
 RUN pip install -r /requirements/production.txt \
     && groupadd -r django \
     && useradd -r -g django django
 
-COPY . /app
+COPY ./backend /app
+COPY ./frontend/build /frontend/build
+COPY ./frontend/build /app/backend/static
+COPY ./frontend/build /staticfiles
 RUN chown -R django /app
+RUN chown -R django /staticfiles
 
-COPY ./compose/django/gunicorn.sh /gunicorn.sh
-COPY ./compose/django/entrypoint.sh /entrypoint.sh
+COPY ./backend/compose/django/gunicorn.sh /gunicorn.sh
+COPY ./backend/compose/django/entrypoint.sh /entrypoint.sh
 RUN sed -i 's/\r//' /entrypoint.sh \
     && sed -i 's/\r//' /gunicorn.sh \
     && chmod +x /entrypoint.sh \

@@ -10,6 +10,9 @@ Production Configurations
 """
 from __future__ import absolute_import, unicode_literals
 
+import os
+
+import raven
 from boto.s3.connection import OrdinaryCallingFormat
 from django.utils import six
 
@@ -93,7 +96,7 @@ MEDIA_URL = 'https://s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
 
 # Static Assets
 # ------------------------
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # EMAIL
@@ -198,3 +201,9 @@ ADMIN_URL = env('DJANGO_ADMIN_URL')
 
 # Your production stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
+
+# Sentry
+INSTALLED_APPS += ['raven.contrib.django.raven_compat', ]
+RAVEN_CONFIG = {
+    'dsn': 'https://88012bdf1926481a933270efc77abdf3:7b8f301238f84b81990e065ee18e5503@sentry.io/141946',
+}
