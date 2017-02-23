@@ -12,7 +12,7 @@ git pull || true
 
 # frontend
 cd /home/deploy/vacation-fund/frontend
-yarn run build
+npm install
 
 # backend
 cd /home/deploy/vacation-fund/backend
