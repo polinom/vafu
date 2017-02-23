@@ -29,9 +29,6 @@ sftp-config.json
 # testing
 /coverage
 
-# production
-/build
-
 # misc
 npm-debug.log*
 yarn-debug.log*
@@ -94,3 +91,6 @@ backend/.cache
 
 staticfiles/
 /backend/compose/nginx/dhparams.pem
+
+# production
+/frontend/build/

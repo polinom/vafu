@@ -5,8 +5,10 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
+from django.contrib.staticfiles import views
 
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
@@ -27,8 +29,13 @@ urlpatterns = [
     # Include login URLs for the browsable API.
     url(r'^api/', include('backend.api.urls', namespace='api')),
 
+    # Deals React app
+    url(r'^deals/$', views.serve, kwargs={'path': 'index.html'}),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    # Goals React app
+    url(r'^goals/$', views.serve, kwargs={'path': 'index.html'}),
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + staticfiles_urlpatterns()
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit

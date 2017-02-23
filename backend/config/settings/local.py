@@ -59,7 +59,7 @@ if os.environ.get('USE_DOCKER') == 'yes':
 # ------------------------------------------------------------------------------
 # Hosts/domain names that are valid for this site
 # See https://docs.djangoproject.com/en/1.10/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['0.0.0.0', '127.0.0.1',])
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['0.0.0.0', '127.0.0.1','localhost',])
 # END SITE CONFIGURATION
 
 DEBUG_TOOLBAR_CONFIG = {
