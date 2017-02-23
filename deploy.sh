@@ -10,14 +10,18 @@ eval "$(ssh-agent -s)" || true
 ssh-add ~/.ssh/id_rsa || true
 git pull || true
 
-# frontend
-cd /home/deploy/vacation-fund/frontend
-npm install
-
-# backend
+# backend 1
 cd /home/deploy/vacation-fund/backend
 docker-compose down || true
 docker-compose rm -f || true
+
+# frontend
+cd /home/deploy/vacation-fund/frontend
+yarn
+yarn run build
+
+# backend 2
+cd /home/deploy/vacation-fund/backend
 docker-compose pull || true
 docker-compose up --build -d
 docker-compose run django python manage.py migrate
