@@ -77,13 +77,18 @@ export default class EditGoal extends React.PureComponent {
     }
   }
 
+  clearAndClose = () => {
+    this.setState({ error: null });
+    this.props.onHide();
+  };
+
   render() {
-    const { goal, show, onHide } = this.props;
+    const { goal, show } = this.props;
     const title = goal ? 'Edit existing goal' : 'Create a new goal';
     const formError = this.getError();
 
     return (
-      <Modal show={show} onHide={onHide}>
+      <Modal show={show} onHide={this.clearAndClose}>
 
         <Modal.Header closeButton>
           <Modal.Title>{title}</Modal.Title>
@@ -153,7 +158,7 @@ export default class EditGoal extends React.PureComponent {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button onClick={onHide}>Close</Button>
+          <Button onClick={this.clearAndClose}>Close</Button>
           <Button bsStyle="primary" onClick={this.handleSubmit}>Save changes</Button>
         </Modal.Footer>
 
