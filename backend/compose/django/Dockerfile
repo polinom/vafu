@@ -10,11 +10,14 @@ RUN pip install -r /requirements/production.txt \
     && useradd -r -g django django
 
 COPY ./backend /app
-COPY ./frontend/build /frontend/build
-COPY ./frontend/build /app/backend/static
-COPY ./frontend/build /staticfiles
+
 RUN chown -R django /app
+
+RUN mkdir /staticfiles
+COPY ./frontend/build /staticfiles/
 RUN chown -R django /staticfiles
+
+VOLUME /staticfiles
 
 COPY ./backend/compose/django/gunicorn.sh /gunicorn.sh
 COPY ./backend/compose/django/entrypoint.sh /entrypoint.sh

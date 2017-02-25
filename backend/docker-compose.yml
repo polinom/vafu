@@ -3,6 +3,7 @@ version: '2'
 volumes:
   postgres_data: {}
   postgres_backup: {}
+  staticfiles: {}
 
 services:
   postgres:
@@ -22,6 +23,8 @@ services:
       - redis
     command: /gunicorn.sh
     env_file: .env
+    volumes:
+      - staticfiles:/staticfiles
 
   nginx:
     build:
@@ -30,15 +33,15 @@ services:
     depends_on:
       - django
       - certbot
-
     ports:
       - "0.0.0.0:80:80"
-
     environment:
       - MY_DOMAIN_NAME=polynets.ca
     ports:
       - "0.0.0.0:80:80"
       - "0.0.0.0:443:443"
+    volumes_from:
+      - django
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt
       - /var/lib/letsencrypt:/var/lib/letsencrypt
@@ -59,4 +62,3 @@ services:
 
   redis:
     image: redis:latest
-
