@@ -1,0 +1,11 @@
+.react-datepicker {
+  font-size: 0.8em !important;
+}
+
+.react-datepicker__navigation {
+  border: 0.65rem solid transparent;
+}
+
+.react-datepicker__current-month {
+  font-size: 0.9em !important;
+}

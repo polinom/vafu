@@ -19,12 +19,15 @@ function request(config) {
     .then(data => data)
     .catch(function (error) {
 
+      let resp;
       if (error.response) {
-        return { error: error.response }
+        resp = error.response
       } else {
         // Something happened in setting up the request that triggered an Error
-        return { error: error.message }
+        resp = error.message
       }
+
+      if (config.hasOwnProperty('errorHandler')) config.errorHandler(resp);
     })
 }
 
@@ -58,4 +61,11 @@ export function fetchGoalsData(section) {
   }[section];
 
   return request({ method: 'GET', url: ROUTES.GOALS, params })
+}
+
+export function postGoalsData(goalId, data, errorHandler, callback) {
+  const url = goalId ? `${ROUTES.GOALS}${goalId}/` : ROUTES.GOALS;
+  const method = goalId ? 'PUT' : 'POST';
+
+  request({ method, url, data, errorHandler }).then(callback);
 }

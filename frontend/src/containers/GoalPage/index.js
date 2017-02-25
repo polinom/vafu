@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid, Row, Col, Button, ButtonGroup } from 'react-bootstrap';
 import Base from '../../containers/Base';
 import GoalCard from '../../components/GoalCard';
+import EditGoal from '../../components/EditGoal';
 import './style.css';
 import * as requests from '../../utils/requests';
 
@@ -12,7 +13,8 @@ export default class GoalPage extends React.PureComponent {
 
     this.state = {
       section: 'My Goals',
-      goals: []
+      goals: [],
+      showModal: false,
     }
   }
 
@@ -35,6 +37,20 @@ export default class GoalPage extends React.PureComponent {
     this.loadGoalsData(section);
   }
 
+  closeModal = () => {
+    this.setState({
+      ...this.state,
+      showModal: false
+    });
+  };
+
+  openModal = () => {
+    this.setState({
+      ...this.state,
+      showModal: true
+    });
+  };
+
   render() {
     const goals = this.state.goals.map((goal) => {
         return (
@@ -45,13 +61,13 @@ export default class GoalPage extends React.PureComponent {
       }
     );
 
-    const newGoalButton = goals.length ? null : (
-        <div className="text-center">
-          <ButtonGroup className="GoalPage-btn-group">
-            <Button>Create a Goal</Button>
-          </ButtonGroup>
-        </div>
-      );
+    const newGoalButton = (
+      <div className="text-center">
+        <ButtonGroup className="GoalPage-btn-group">
+          <Button onClick={this.openModal}>Create a Goal</Button>
+        </ButtonGroup>
+      </div>
+    );
 
     return (
       <Base>
@@ -80,6 +96,13 @@ export default class GoalPage extends React.PureComponent {
                   </Button>
 
                 </ButtonGroup>
+
+                <EditGoal
+                  goal={null}
+                  show={this.state.showModal}
+                  onHide={this.closeModal}
+                  reloadGoals={this.loadGoalsData.bind(this, this.state.section)}
+                />
 
               </div>
 

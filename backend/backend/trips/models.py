@@ -47,7 +47,7 @@ class Favorite(Timestampable2, models.Model):
 class Goal(Timestampable, models.Model):
     owner = models.ForeignKey(User, related_name='goals')
 
-    title = models.CharField(_('title'), max_length=100, blank=True)
+    title = models.CharField(_('title'), max_length=100, blank=False)
     image = models.URLField(_('image'), max_length=255, blank=True)
     description = models.TextField(_('description'), blank=True)
     budget_estimate = models.IntegerField(_('budget estimate'), null=True, blank=True)
