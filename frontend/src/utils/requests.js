@@ -1,22 +1,18 @@
 import axios from 'axios';
 
 const ROUTES = {
-  USERS: '/api/users/',
   CURRENT_USER: '/api/users/current/',
   DEALS: '/api/deals/',
   FAVORITES: '/api/favorites/',
+  GOALS: '/api/goals/',
+  USERS: '/api/users/',
 };
 
-function request({ method, url, params, data }) {
+function request(config) {
   axios.defaults.xsrfCookieName = 'csrftoken';
   axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
-  const req = axios({
-    method,
-    url,
-    params,
-    data,
-  });
+  const req = axios(config);
 
   return req
     .then(({ data }) => data)
@@ -52,4 +48,14 @@ export function fetchDealsData(section) {
   }[section];
 
   return request({ method: 'GET', url: ROUTES.DEALS, params })
+}
+
+export function fetchGoalsData(section) {
+  const params = {
+    'My Goals': null,
+    'Shared': { 'section': 'shared' },
+    'Friends': { 'section': 'friends' },
+  }[section];
+
+  return request({ method: 'GET', url: ROUTES.GOALS, params })
 }

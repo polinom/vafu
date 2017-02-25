@@ -20,7 +20,7 @@ class Deal(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('deal:detail', kwargs={'id': self.id})
+        return reverse('deals:detail', kwargs={'id': self.id})
 
     class Meta:
         verbose_name = _('deal')
@@ -44,8 +44,8 @@ class Favorite(Timestampable2, models.Model):
         )
 
 
-class Trip(Timestampable, models.Model):
-    owner = models.ForeignKey(User, related_name='trips')
+class Goal(Timestampable, models.Model):
+    owner = models.ForeignKey(User, related_name='goals')
 
     title = models.CharField(_('title'), max_length=100, blank=True)
     image = models.URLField(_('image'), max_length=255, blank=True)
@@ -58,9 +58,9 @@ class Trip(Timestampable, models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('trips:detail', kwargs={'id': self.id})
+        return reverse('goals:detail', kwargs={'id': self.id})
 
     class Meta:
         ordering = ('-created_at',)
-        verbose_name = _('trip')
-        verbose_name_plural = _('trips')
+        verbose_name = _('goal')
+        verbose_name_plural = _('goals')

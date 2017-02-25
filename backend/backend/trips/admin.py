@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 
 from django.contrib import admin
 
-from .models import Trip, Deal, Favorite
+from .models import Goal, Deal, Favorite
 
 
 @admin.register(Deal)
@@ -18,7 +18,7 @@ class FavoriteAdmin(admin.ModelAdmin):
     search_fields = ['owner__username', 'deal__title']
 
 
-@admin.register(Trip)
+@admin.register(Goal)
 class TripAdmin(admin.ModelAdmin):
     list_display = ['owner', 'title', 'created_at']
     search_fields = ['owner__username', 'title']

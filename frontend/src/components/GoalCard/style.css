@@ -1,0 +1,70 @@
+.GoalCard-image {
+  opacity: .7;
+  overflow: hidden;
+  transition: all .2s ease-in-out;
+  padding-top: 10px;
+}
+
+.GoalCard-image:hover,
+.Card:hover .GoalCard-image {
+  opacity: 1;
+}
+
+.GoalCard-header {
+  padding: 0 0 10px 0;
+  margin: 0;
+  font-size: 20px;
+}
+
+.GoalCard-param {
+  clear: both;
+}
+
+.GoalCard-fab {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  position: absolute;
+  margin-top: -14px;
+  right: 6px;
+  color: #fff;
+  font-size: 42px;
+  line-height: 42px;
+  text-align: center;
+}
+
+.GoalCard-favorited-true {
+  right: 10px;
+  margin-top: -10px;
+}
+
+.GoalCard-favorited-true:before {
+  content: '\1F49B';
+  color: #0f0f0f;
+}
+
+.GoalCard-favorited-false:before {
+  content: '\2661';
+  color: #0f0f0f;
+}
+
+.GoalCard-fab:hover {
+  background: #ffffcc;
+  cursor: pointer;
+}
+
+.GoalCard-param-name {
+  font-weight: bold;
+}
+
+.GoalCard-progress {
+  clear: both;
+  display: block;
+  margin: 40px 0 0 0 !important;
+  min-height: 35px;
+}
+
+.GoalCard-progress .progress-bar {
+  line-height: 35px;
+  vertical-align: middle;
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Row, Col, Button, ButtonGroup } from 'react-bootstrap';
 import Base from '../../containers/Base';
-import Card from '../../components/Card';
+import DealCard from '../../components/DealCard';
 import './style.css';
 import * as requests from '../../utils/requests';
 
@@ -42,7 +42,7 @@ export default class DealPage extends React.PureComponent {
   render() {
     const deals = this.state.deals.map((deal) => {
         return (
-          <Card
+          <DealCard
             key={deal.id} {...deal}
             onFavoritedToggle={this.toggleFavorited.bind(this, deal.id, deal.favorite_id)}
           />

@@ -9,8 +9,8 @@ from . import views
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
 router.register(r'deals', views.DealViewSet)
-router.register(r'trips', views.TripViewSet)
 router.register(r'favorites', views.FavoriteViewSet)
+router.register(r'goals', views.GoalViewSet)
 router.register(r'users', views.UserViewSet)
 
 # The API URLs are now determined automatically by the router.

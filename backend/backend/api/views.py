@@ -2,10 +2,10 @@ from rest_framework import permissions, viewsets
 from rest_framework import status
 from rest_framework.response import Response
 
-from backend.trips.models import Trip, Deal, Favorite
+from backend.trips.models import Goal, Deal, Favorite
 from backend.users.models import User
 from .permissions import IsOwner
-from .serializers import TripSerializer, UserSerializer, DealSerializer, FavoriteSerializer, FavoriteCreateSerializer
+from .serializers import GoalSerializer, UserSerializer, DealSerializer, FavoriteSerializer, FavoriteCreateSerializer
 
 
 class DealViewSet(viewsets.ModelViewSet):
@@ -40,6 +40,12 @@ class FavoriteViewSet(viewsets.ModelViewSet):
     serializer_class = FavoriteSerializer
     permission_classes = (permissions.IsAuthenticated, IsOwner)
 
+    def get_queryset(self):
+        qs = Favorite.objects.all()
+        if not self.request.user.is_superuser:
+            qs = qs.filter(owner=self.request.user)
+        return qs
+
     # We overwrite create methods in order to build a Favorite object using "request.user" and received "deal_id"
     def create(self, request, *args, **kwargs):
         serializer = FavoriteCreateSerializer(data={
@@ -59,14 +65,20 @@ class FavoriteViewSet(viewsets.ModelViewSet):
         )
 
 
-class TripViewSet(viewsets.ModelViewSet):
+class GoalViewSet(viewsets.ModelViewSet):
     """
-    This endpoint presents Trips.
-    The **owner** of the Trip may update or delete instances of the Trip.
+    This endpoint presents Goals.
+    The **owner** of the Goal may update or delete instances of the Goal.
     """
-    queryset = Trip.objects.all()
-    serializer_class = TripSerializer
+    queryset = Goal.objects.all()
+    serializer_class = GoalSerializer
     permission_classes = (permissions.IsAuthenticated, IsOwner)
+
+    def get_queryset(self):
+        qs = Goal.objects.all()
+        if not self.request.user.is_superuser:
+            qs = qs.filter(owner=self.request.user)
+        return qs
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
