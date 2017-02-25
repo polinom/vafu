@@ -41,7 +41,7 @@ class TripSerializer(serializers.HyperlinkedModelSerializer):
         model = Trip
         fields = (
             'id', 'url', 'owner', 'created_at', 'updated_at',
-            'title', 'description', 'budget_estimate', 'funding_progress', 'travel_date',
+            'title', 'image', 'description', 'budget_estimate', 'funding_progress', 'travel_date',
         )
         extra_kwargs = {
             'owner': {'view_name': 'api:user-detail'},

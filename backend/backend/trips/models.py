@@ -48,6 +48,7 @@ class Trip(Timestampable, models.Model):
     owner = models.ForeignKey(User, related_name='trips')
 
     title = models.CharField(_('title'), max_length=100, blank=True)
+    image = models.URLField(_('image'), max_length=255, blank=True)
     description = models.TextField(_('description'), blank=True)
     budget_estimate = models.IntegerField(_('budget estimate'), null=True, blank=True)
     funding_progress = models.IntegerField(_('funding progress'), null=True, blank=True)
