@@ -14,15 +14,19 @@ git pull || true
 cd /home/deploy/vacation-fund/backend
 docker-compose down || true
 docker-compose rm -f || true
+docker volume rm backend_staticfiles
 
 # frontend
 cd /home/deploy/vacation-fund/frontend
 yarn
 yarn run build
+mv ./build/static/* ./build/
 
 # backend 2
 cd /home/deploy/vacation-fund/backend
 docker-compose pull || true
 docker-compose up --build -d
 docker-compose run django python manage.py migrate
+docker-compose run django python manage.py collectstatic --noinput
+
 EOF
