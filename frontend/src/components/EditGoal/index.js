@@ -13,22 +13,47 @@ export default class EditGoal extends React.PureComponent {
 
     moment.locale(window.navigator.userLanguage || window.navigator.language);
 
-    this.state = {
-      travel_date: moment()
+    this.initialState = {
+      travel_date: moment(),
+      id: null,
+      title: '',
+      image: '',
+      description: '',
+      budget_estimate: null,
+      funding_progress: null,
     };
+
+    this.state = this.initialState;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    let travel_date = moment((nextProps.goal || {}).travel_date);
+    if (!travel_date.isValid()) travel_date = moment();
+
+    let nextState = {
+      ...this.initialState,
+    };
+
+    if (nextProps.goal) nextState = {
+      ...nextProps.goal,
+    };
+
+    nextState = {
+      ...nextState,
+      travel_date
+    };
+
+    this.setState(nextState);
   }
 
   handleDateChange = (date) => {
-    this.setState({
-      travel_date: date
-    });
+    this.setState({ travel_date: date, });
   };
 
   handleFormChange = (e) => {
     const key = e.target.id.replace(/^id_/, '');
 
     this.setState(
-      ...this.state,
       { [key]: e.target.value }
     );
   };
@@ -36,12 +61,9 @@ export default class EditGoal extends React.PureComponent {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    this.setState(
-      ...this.state,
-      { error: null }
-    );
+    this.setState({ error: null });
 
-    this.postGoalsData(null, this.state)
+    this.postGoalsData(this.state.id, this.state)
   };
 
   postGoalsData(goalId, data) {
@@ -55,10 +77,7 @@ export default class EditGoal extends React.PureComponent {
   };
 
   handleSubmitError = ({ data: error }) => {
-    this.setState(
-      ...this.state,
-      { error }
-    );
+    this.setState({ error });
   };
 
   getError() {
@@ -94,14 +113,15 @@ export default class EditGoal extends React.PureComponent {
           <Modal.Title>{title}</Modal.Title>
         </Modal.Header>
 
-        <Modal.Body>
-          <Form>
+        <Form>
+          <Modal.Body>
 
             {formError && <Alert bsStyle="danger">{formError}</Alert>}
 
             <FieldGroup
               id="id_title"
               error={this.getValidationError("id_title")}
+              value={this.state.title || ''}
               type="text"
               label="Title"
               placeholder="Enter title"
@@ -111,6 +131,7 @@ export default class EditGoal extends React.PureComponent {
             <FieldGroup
               id="id_image"
               error={this.getValidationError("id_image")}
+              value={this.state.image || ''}
               type="text"
               label="Image URL"
               placeholder="Enter image URL"
@@ -121,6 +142,7 @@ export default class EditGoal extends React.PureComponent {
               <ControlLabel>Description</ControlLabel>
               <FormControl
                 componentClass="textarea"
+                value={this.state.description || ''}
                 placeholder="Enter description"
                 onChange={this.handleFormChange}
               />
@@ -129,6 +151,7 @@ export default class EditGoal extends React.PureComponent {
             <FieldGroup
               id="id_budget_estimate"
               error={this.getValidationError("id_budget_estimate")}
+              value={this.state.budget_estimate || ''}
               type="number"
               label="Budget estimate"
               placeholder="Enter estimated budget $"
@@ -138,6 +161,7 @@ export default class EditGoal extends React.PureComponent {
             <FieldGroup
               id="id_funding_progress"
               error={this.getValidationError("id_funding_progress")}
+              value={this.state.funding_progress || ''}
               type="number"
               label="Funding Progress"
               placeholder="Enter funding progress $"
@@ -148,20 +172,19 @@ export default class EditGoal extends React.PureComponent {
               <ControlLabel>Travel date</ControlLabel>
               <br />
               <DatePicker
-                selected={this.state.travel_date}
+                selected={moment(this.state.travel_date) || moment()}
                 onChange={this.handleDateChange}
               />
             </FormGroup>
 
-          </Form>
+          </Modal.Body>
 
-        </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.clearAndClose}>Close</Button>
+            <Button bsStyle="primary" onClick={this.handleSubmit} type="submit">Save changes</Button>
+          </Modal.Footer>
 
-        <Modal.Footer>
-          <Button onClick={this.clearAndClose}>Close</Button>
-          <Button bsStyle="primary" onClick={this.handleSubmit}>Save changes</Button>
-        </Modal.Footer>
-
+        </Form>
       </Modal>
     )
   }

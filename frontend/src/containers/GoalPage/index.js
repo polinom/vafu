@@ -15,6 +15,7 @@ export default class GoalPage extends React.PureComponent {
       section: 'My Goals',
       goals: [],
       showModal: false,
+      editedGoal: null,
     }
   }
 
@@ -40,22 +41,30 @@ export default class GoalPage extends React.PureComponent {
   closeModal = () => {
     this.setState({
       ...this.state,
-      showModal: false
+      showModal: false,
+      editedGoal: null,
     });
   };
 
-  openModal = () => {
+  openModal = (goal) => {
     this.setState({
       ...this.state,
-      showModal: true
+      showModal: true,
+      editedGoal: goal,
     });
+  };
+
+  handleEditGoalClick = (goal) => {
+    this.openModal(goal);
   };
 
   render() {
     const goals = this.state.goals.map((goal) => {
         return (
           <GoalCard
-            key={goal.id} {...goal}
+            key={goal.id}
+            onEditGoalClick={this.handleEditGoalClick.bind(this, goal)}
+            {...goal}
           />
         )
       }
@@ -64,7 +73,7 @@ export default class GoalPage extends React.PureComponent {
     const newGoalButton = (
       <div className="text-center">
         <ButtonGroup className="GoalPage-btn-group">
-          <Button onClick={this.openModal}>Create a Goal</Button>
+          <Button onClick={this.openModal.bind(this, null)}>Create a Goal</Button>
         </ButtonGroup>
       </div>
     );
@@ -98,7 +107,7 @@ export default class GoalPage extends React.PureComponent {
                 </ButtonGroup>
 
                 <EditGoal
-                  goal={null}
+                  goal={this.state.editedGoal}
                   show={this.state.showModal}
                   onHide={this.closeModal}
                   reloadGoals={this.loadGoalsData.bind(this, this.state.section)}

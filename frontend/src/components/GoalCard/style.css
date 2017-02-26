@@ -3,6 +3,7 @@
   overflow: hidden;
   transition: all .2s ease-in-out;
   padding-top: 10px;
+  cursor: pointer;
 }
 
 .GoalCard-image:hover,

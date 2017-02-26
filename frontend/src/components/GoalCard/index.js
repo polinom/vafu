@@ -4,7 +4,7 @@ import Card from '../Card';
 import { formatDateAsMonthYear, calcProgress } from '../../utils/index';
 import { ProgressBar } from 'react-bootstrap';
 
-const GoalCard = ({ title, image, budget_estimate, funding_progress, travel_date }) => (
+const GoalCard = ({ title, image, budget_estimate, funding_progress, travel_date, onEditGoalClick }) => (
   <Card>
     <h3 className="GoalCard-header">{title}</h3>
 
@@ -12,6 +12,7 @@ const GoalCard = ({ title, image, budget_estimate, funding_progress, travel_date
       <img src={image || 'https://placeholdit.imgix.net/~text?txtsize=60&txt=image&w=300&h=200'}
            width="100%"
            role="presentation"
+           onClick={onEditGoalClick}
       />
     </div>
 
