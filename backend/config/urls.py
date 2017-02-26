@@ -30,10 +30,10 @@ urlpatterns = [
     url(r'^api/', include('backend.api.urls', namespace='api')),
 
     # Deals React app
-    url(r'^deals/$', views.serve, kwargs={'path': 'index.html'}),
+    url(r'^deals/$', views.serve, kwargs={'path': 'index.html'}, name='deals'),
 
     # Goals React app
-    url(r'^goals/$', views.serve, kwargs={'path': 'index.html'}),
+    url(r'^goals/$', views.serve, kwargs={'path': 'index.html'}, name='goals'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + staticfiles_urlpatterns()
 
