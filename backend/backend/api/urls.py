@@ -10,6 +10,7 @@ from . import views
 router = DefaultRouter()
 router.register(r'deals', views.DealViewSet)
 router.register(r'favorites', views.FavoriteViewSet)
+router.register(r'followers', views.FollowerViewSet)
 router.register(r'goals', views.GoalViewSet)
 router.register(r'users', views.UserViewSet)
 

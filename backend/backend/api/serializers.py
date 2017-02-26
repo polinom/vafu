@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from backend.trips.models import Goal, Deal, Favorite
-from backend.users.models import User
+from backend.users.models import User, Follower
 
 
 class DealSerializer(serializers.HyperlinkedModelSerializer):
@@ -33,6 +33,22 @@ class FavoriteCreateSerializer(serializers.ModelSerializer):
         fields = ('owner_id', 'deal_id')
 
 
+class FollowerSerializer(serializers.HyperlinkedModelSerializer):
+    url = serializers.HyperlinkedIdentityField(view_name='api:follower-detail')
+    owner = serializers.HyperlinkedRelatedField(view_name='api:user-detail', read_only=True)
+    following = serializers.HyperlinkedRelatedField(view_name='api:user-detail', read_only=True)
+
+    class Meta:
+        model = Follower
+        fields = ('id', 'url', 'owner', 'following', 'created_at',)
+
+
+class FollowerCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Follower
+        fields = ('owner_id', 'following_id')
+
+
 class GoalSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='api:goal-detail')
     owner = serializers.HyperlinkedRelatedField(view_name='api:user-detail', read_only=True)
@@ -50,6 +66,9 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     goals = serializers.HyperlinkedRelatedField(view_name='api:goal-detail', many=True, read_only=True)
     favorite_deals = serializers.HyperlinkedRelatedField(view_name='api:favorite-detail', many=True, read_only=True)
 
+    followers_users = serializers.HyperlinkedRelatedField(view_name='api:follower-detail', many=True, read_only=True)
+    following_users = serializers.HyperlinkedRelatedField(view_name='api:follower-detail', many=True, read_only=True)
+
     class Meta:
         model = User
-        fields = ('id', 'url', 'username', 'favorite_deals', 'goals')
+        fields = ('id', 'url', 'username', 'favorite_deals', 'goals', 'followers_users', 'following_users')

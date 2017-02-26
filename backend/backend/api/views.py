@@ -3,9 +3,10 @@ from rest_framework import status
 from rest_framework.response import Response
 
 from backend.trips.models import Goal, Deal, Favorite
-from backend.users.models import User
+from backend.users.models import User, Follower
 from .permissions import IsOwner
-from .serializers import GoalSerializer, UserSerializer, DealSerializer, FavoriteSerializer, FavoriteCreateSerializer
+from .serializers import GoalSerializer, UserSerializer, DealSerializer, FavoriteSerializer, FavoriteCreateSerializer, \
+    FollowerSerializer, FollowerCreateSerializer
 
 
 class DealViewSet(viewsets.ModelViewSet):
@@ -62,6 +63,40 @@ class FavoriteViewSet(viewsets.ModelViewSet):
         serializer.save(
             owner_id=self.request.user.id,
             deal_id=self.request.data['deal_id'],
+        )
+
+
+class FollowerViewSet(viewsets.ModelViewSet):
+    """
+    This endpoint presents Followers.
+    The **owner** of the Follower may update or delete instances of the Follower.
+    """
+    queryset = Follower.objects.all()
+    serializer_class = FollowerSerializer
+    permission_classes = (permissions.IsAuthenticated, IsOwner)
+
+    def get_queryset(self):
+        qs = Follower.objects.all()
+        if not self.request.user.is_superuser:
+            qs = qs.filter(owner=self.request.user) | qs.filter(following=self.request.user)
+        return qs
+
+    # We overwrite create methods in order to build a Follower object using "request.user" and received "following_id"
+    def create(self, request, *args, **kwargs):
+        serializer = FollowerCreateSerializer(data={
+            'owner_id': self.request.user.id,
+            'following_id': self.request.data['following_id'],
+        })
+
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def perform_create(self, serializer):
+        serializer.save(
+            owner_id=self.request.user.id,
+            following_id=self.request.data['following_id'],
         )
 
 

@@ -5,7 +5,8 @@ from django import forms
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
-from .models import User
+
+from .models import User, Follower
 
 
 class MyUserChangeForm(UserChangeForm):
@@ -29,6 +30,12 @@ class MyUserCreationForm(UserCreationForm):
         except User.DoesNotExist:
             return username
         raise forms.ValidationError(self.error_messages['duplicate_username'])
+
+
+@admin.register(Follower)
+class FollowerAdmin(admin.ModelAdmin):
+    list_display = ['owner', 'following', 'created_at']
+    search_fields = ['owner__username', 'following__username']
 
 
 @admin.register(User)
