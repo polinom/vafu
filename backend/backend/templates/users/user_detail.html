@@ -38,6 +38,7 @@
                                     <li>✉️️ {{ object.email }}</li>
                                     <li>☎️ 416-123-5555</li>
                                     <li><b><span style="color: darkgreen">UserID: A1B2C3D4E5</span></b></li>
+                                    <li>Following count: {{ object.following_users.count }}</li>
                                 </ul>
                             </div>
                             <div class="col-md-6">
@@ -50,6 +51,7 @@
                                             <b><span style="color: darkgreen">Manage payment details</span></b>
                                         </a>
                                     </li>
+                                    <li>Followers count: {{ object.followers_users.count }}</li>
                                 </ul>
                             </div>
                         </div>
