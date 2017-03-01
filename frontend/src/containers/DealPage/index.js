@@ -1,6 +1,6 @@
 import React from 'react';
 import * as requests from '../../utils/requests';
-import { Col, ControlLabel, Form, FormControl, FormGroup, Grid, Jumbotron, Row } from 'react-bootstrap';
+import { Col, ControlLabel, Form, FormControl, FormGroup, Grid, Image, Jumbotron, Row } from 'react-bootstrap';
 import './style.css';
 import FieldGroup from '../../components/FieldGroup/index';
 
@@ -39,8 +39,6 @@ export default class DealPage extends React.PureComponent {
             <Jumbotron className="DealPage-container">
 
               <a className="DealPage-go-back" onClick={this.props.router.goBack}>🔙</a>
-              <br/>
-              <br/>
 
               <Form>
                 <fieldset disabled="disabled">
@@ -98,6 +96,10 @@ export default class DealPage extends React.PureComponent {
                 </fieldset>
               </Form>
             </Jumbotron>
+          </Col>
+
+          <Col md={2}>
+            <Image className="DealPage-image" src={this.state.image} responsive />
           </Col>
         </Row>
       </Grid>
