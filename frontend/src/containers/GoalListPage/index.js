@@ -1,12 +1,12 @@
 import React from 'react';
-import { Grid, Row, Col, Button, ButtonGroup } from 'react-bootstrap';
+import { Button, ButtonGroup, Col, Grid, Row } from 'react-bootstrap';
 import Base from '../../containers/Base';
 import GoalCard from '../../components/GoalCard';
 import EditGoal from '../../components/EditGoal';
 import './style.css';
 import * as requests from '../../utils/requests';
 
-export default class GoalPage extends React.PureComponent {
+export default class GoalListPage extends React.PureComponent {
 
   constructor() {
     super();
@@ -20,10 +20,10 @@ export default class GoalPage extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.loadGoalsData(this.state.section);
+    this.loadData(this.state.section);
   };
 
-  async loadGoalsData(section) {
+  async loadData(section) {
     this.setState({
       goals: await requests.fetchGoalsData(section)
     });
@@ -35,7 +35,7 @@ export default class GoalPage extends React.PureComponent {
       section
     });
 
-    this.loadGoalsData(section);
+    this.loadData(section);
   }
 
   closeModal = () => {
@@ -72,7 +72,7 @@ export default class GoalPage extends React.PureComponent {
 
     const newGoalButton = (
       <div className="text-center">
-        <ButtonGroup className="GoalPage-btn-group">
+        <ButtonGroup className="GoalListPage-btn-group">
           <Button onClick={this.openModal.bind(this, null)}>Create a Goal</Button>
         </ButtonGroup>
       </div>
@@ -85,7 +85,7 @@ export default class GoalPage extends React.PureComponent {
             <Col md={6} mdOffset={3}>
               <div className="text-center">
 
-                <ButtonGroup className="GoalPage-btn-group">
+                <ButtonGroup className="GoalListPage-btn-group">
 
                   <Button bsStyle={this.state.section === 'My Goals' ? 'info' : 'default'}
                           onClick={() => this.setSection('My Goals')}
@@ -110,7 +110,7 @@ export default class GoalPage extends React.PureComponent {
                   goal={this.state.editedGoal}
                   show={this.state.showModal}
                   onHide={this.closeModal}
-                  reloadGoals={this.loadGoalsData.bind(this, this.state.section)}
+                  reloadGoals={this.loadData.bind(this, this.state.section)}
                 />
 
               </div>
@@ -119,7 +119,7 @@ export default class GoalPage extends React.PureComponent {
             </Col>
           </Row>
 
-          <Row className="GoalPage-goals">
+          <Row className="GoalListPage-goals">
             {goals}
           </Row>
         </Grid>

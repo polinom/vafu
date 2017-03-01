@@ -1,7 +1,13 @@
-.DealPage-btn-group {
-  margin-top: 20px;
+.DealPage-container {
+  margin: 50px;
+  padding: 20px !important;
+  background-color: #f9f9f9 !important;
 }
 
-.DealPage-deals {
-  padding: 40px;
+.DealPage-header {
+  margin: 0;
+}
+
+.DealPage-go-back {
+  cursor: pointer;
 }

@@ -27,14 +27,23 @@ export default class Base extends React.Component {
     }
   }
 
+  getChildren() {
+    if (this.props.location) {
+      return React.cloneElement(this.props.children, { key: this.props.location.pathname });
+    } else {
+      return this.props.children;
+    }
+  }
+
   render() {
     const user = this.getUser();
+    const children = this.getChildren();
 
     return (
       <div>
         <NavHeader user={user}/>
 
-        {this.props.children}
+        {children}
       </div>
     )
   }

@@ -1,9 +1,8 @@
 import React from 'react';
-import { Grid, Row, Col, Button, ButtonGroup } from 'react-bootstrap';
-import Base from '../../containers/Base';
-import DealCard from '../../components/DealCard';
-import './style.css';
 import * as requests from '../../utils/requests';
+import { Col, ControlLabel, Form, FormControl, FormGroup, Grid, Jumbotron, Row } from 'react-bootstrap';
+import './style.css';
+import FieldGroup from '../../components/FieldGroup/index';
 
 export default class DealPage extends React.PureComponent {
 
@@ -11,90 +10,97 @@ export default class DealPage extends React.PureComponent {
     super();
 
     this.state = {
-      section: 'Favourites',
-      deals: []
-    }
+      title: null,
+      image: null,
+      description: null,
+      destination_country: null,
+      seller_name: null,
+      price: null,
+      favorited_by_me: null,
+    };
   }
 
   componentDidMount() {
-    this.loadDealsData(this.state.section);
+    this.loadData(this.props.params['dealId']);
   };
 
-  async loadDealsData(section) {
+  async loadData(dealId) {
+    const data = await requests.fetchDealData(dealId);
     this.setState({
-      deals: await requests.fetchDealsData(section)
+      ...data
     });
-  };
-
-  setSection(section) {
-    this.setState({
-      ...this.state,
-      section
-    });
-
-    this.loadDealsData(section);
-  }
-
-  toggleFavorited(dealId, favoriteId) {
-    requests.toggleFavoriteDeal(dealId, favoriteId, () => this.loadDealsData(this.state.section));
   };
 
   render() {
-    const deals = this.state.deals.map((deal) => {
-        return (
-          <DealCard
-            key={deal.id} {...deal}
-            onFavoritedToggle={this.toggleFavorited.bind(this, deal.id, deal.favorite_id)}
-          />
-        )
-      }
-    );
-
     return (
-      <Base>
-        <Grid>
-          <Row>
-            <Col md={6} mdOffset={3}>
-              <div className="text-center">
+      <Grid>
+        <Row>
+          <Col md={8} mdOffset={2}>
+            <Jumbotron className="DealPage-container">
 
-                <ButtonGroup className="DealPage-btn-group">
+              <a className="DealPage-go-back" onClick={this.props.router.goBack}>🔙</a>
+              <br/>
+              <br/>
 
-                  <Button bsStyle={this.state.section === 'Browse' ? 'info' : 'default'}
-                          onClick={() => this.setSection('Browse')}
-                  >
-                    Browse
-                  </Button>
+              <Form>
+                <fieldset disabled="disabled">
 
-                  <Button bsStyle={this.state.section === 'Favourites' ? 'info' : 'default'}
-                          onClick={() => this.setSection('Favourites')}
-                  >
-                    Favourites
-                  </Button>
+                  <FieldGroup
+                    id="id_title"
+                    value={this.state.title || ''}
+                    type="text"
+                    label="Title"
+                  />
 
-                  <Button bsStyle={this.state.section === 'For You' ? 'info' : 'default'}
-                          onClick={() => this.setSection('For You')}
-                  >For You
-                  </Button>
+                  <FieldGroup
+                    id="id_image"
+                    value={this.state.image || ''}
+                    type="text"
+                    label="Image URL"
+                  />
 
-                </ButtonGroup>
+                  <FormGroup controlId="id_description">
+                    <ControlLabel>Description</ControlLabel>
+                    <FormControl
+                      componentClass="textarea"
+                      value={this.state.description || ''}
+                    />
+                  </FormGroup>
 
-              </div>
+                  <FieldGroup
+                    id="id_destination_country"
+                    value={this.state.destination_country || ''}
+                    type="text"
+                    label="Destination country"
+                  />
 
-              <div className="text-center">
+                  <FieldGroup
+                    id="id_seller_name"
+                    value={this.state.seller_name || ''}
+                    type="text"
+                    label="Seller name"
+                  />
 
-                <ButtonGroup className="DealPage-btn-group">
-                  <Button>Filter</Button>
-                </ButtonGroup>
+                  <FieldGroup
+                    id="id_price"
+                    value={this.state.price || ''}
+                    type="number"
+                    label="Price"
+                  />
 
-              </div>
-            </Col>
-          </Row>
+                  <FieldGroup
+                    id="id_price"
+                    value={this.state.favorite_id !== null || ''}
+                    type="boolean"
+                    label="Favorited by me"
+                  />
 
-          <Row className="DealPage-deals">
-            {deals}
-          </Row>
-        </Grid>
-      </Base>
+                </fieldset>
+              </Form>
+            </Jumbotron>
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 }

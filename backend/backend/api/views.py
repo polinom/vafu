@@ -23,10 +23,10 @@ class DealViewSet(viewsets.ModelViewSet):
         """
         queryset = Deal.objects.all()
 
-        section = self.request.query_params.get('section', None)
+        section = self.request.query_params.get('section', 'browse')
         if section == 'favorites':
             queryset = queryset.filter(favorited_users__owner_id=self.request.user.id)
-        elif section:
+        elif section != 'browse':
             queryset = queryset.none()
 
         return queryset

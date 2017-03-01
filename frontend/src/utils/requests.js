@@ -43,14 +43,16 @@ export function toggleFavoriteDeal(dealId, favoriteId, callback) {
   request({ method, url, data }).then(() => callback());
 }
 
-export function fetchDealsData(section) {
-  const params = {
-    'Browse': null,
-    'Favourites': { 'section': 'favorites' },
-    'For You': { 'section': 'for_you' },
-  }[section];
+export function fetchDealListData(section) {
+  const params = { section };
 
   return request({ method: 'GET', url: ROUTES.DEALS, params })
+}
+
+export function fetchDealData(dealId) {
+  const url = `${ROUTES.DEALS}${dealId}/`;
+
+  return request({ method: 'GET', url })
 }
 
 export function fetchGoalsData(section) {

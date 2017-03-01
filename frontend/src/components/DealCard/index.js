@@ -1,8 +1,9 @@
 import React from 'react';
 import './style.css';
 import Card from '../Card';
+import { Link } from 'react-router';
 
-const DealCard = ({ title, image, description, seller_name, favorite_id, onFavoritedToggle }) => (
+const DealCard = ({ title, image, description, seller_name, favorite_id, onFavoritedToggle, id }) => (
   <Card>
     <div
       className={`DealCard-fab DealCard-favorited-${favorite_id ? 'true' : false}`}
@@ -24,10 +25,12 @@ const DealCard = ({ title, image, description, seller_name, favorite_id, onFavor
     </p>
 
     <div className="DealCard-image">
-      <img src={image}
-           width="100%"
-           role="presentation"
-      />
+      <Link to={`/deals/${id}/`}>
+        <img src={image}
+             width="100%"
+             role="presentation"
+        />
+      </Link>
     </div>
   </Card>
 );
