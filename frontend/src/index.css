@@ -7,3 +7,8 @@ body {
   color: #373a3c;
   background-color: #fff;
 }
+
+html, body {
+  min-height: 100%;
+  height: 100%;
+}

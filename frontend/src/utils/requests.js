@@ -4,6 +4,7 @@ const ROUTES = {
   CURRENT_USER: '/api/users/current/',
   DEALS: '/api/deals/',
   FAVORITES: '/api/favorites/',
+  FOLLOWERS: '/api/followers/',
   GOALS: '/api/goals/',
   USERS: '/api/users/',
 };
@@ -35,10 +36,23 @@ export function fetchCurrentUser() {
   return request({ method: 'GET', url: ROUTES.CURRENT_USER })
 }
 
+export function fetchUserData(username) {
+  const url = `${ROUTES.USERS}${username}/`;
+  return request({ method: 'GET', url })
+}
+
 export function toggleFavoriteDeal(dealId, favoriteId, callback) {
   const url = favoriteId ? `${ROUTES.FAVORITES}${favoriteId}/` : ROUTES.FAVORITES;
   const method = favoriteId ? 'DELETE' : 'POST';
   const data = favoriteId ? '' : { 'deal_id': dealId };
+
+  request({ method, url, data }).then(() => callback());
+}
+
+export function toggleFollow(targetUserId, followerId, callback) {
+  const url = followerId ? `${ROUTES.FOLLOWERS}${followerId}/` : ROUTES.FOLLOWERS;
+  const method = followerId ? 'DELETE' : 'POST';
+  const data = followerId ? '' : { 'following_id': targetUserId };
 
   request({ method, url, data }).then(() => callback());
 }

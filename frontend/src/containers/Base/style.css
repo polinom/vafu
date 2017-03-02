@@ -1,3 +1,7 @@
+.Base-container {
+  position: relative;
+}
+
 .BaseLayout-user a {
   color: #fff !important;
 }

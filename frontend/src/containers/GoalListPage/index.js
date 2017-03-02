@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, ButtonGroup, Col, Grid, Row } from 'react-bootstrap';
-import Base from '../../containers/Base';
 import GoalCard from '../../components/GoalCard';
 import EditGoal from '../../components/EditGoal';
 import './style.css';
@@ -79,51 +78,49 @@ export default class GoalListPage extends React.PureComponent {
     );
 
     return (
-      <Base>
-        <Grid>
-          <Row>
-            <Col md={6} mdOffset={3}>
-              <div className="text-center">
+      <Grid>
+        <Row>
+          <Col md={6} mdOffset={3}>
+            <div className="text-center">
 
-                <ButtonGroup className="GoalListPage-btn-group">
+              <ButtonGroup className="GoalListPage-btn-group">
 
-                  <Button bsStyle={this.state.section === 'My Goals' ? 'info' : 'default'}
-                          onClick={() => this.setSection('My Goals')}
-                  >
-                    My Goals
-                  </Button>
+                <Button bsStyle={this.state.section === 'My Goals' ? 'info' : 'default'}
+                        onClick={() => this.setSection('My Goals')}
+                >
+                  My Goals
+                </Button>
 
-                  <Button bsStyle={this.state.section === 'Shared' ? 'info' : 'default'}
-                          onClick={() => this.setSection('Shared')}
-                  >
-                    Shared
-                  </Button>
+                <Button bsStyle={this.state.section === 'Shared' ? 'info' : 'default'}
+                        onClick={() => this.setSection('Shared')}
+                >
+                  Shared
+                </Button>
 
-                  <Button bsStyle={this.state.section === 'Friends' ? 'info' : 'default'}
-                          onClick={() => this.setSection('Friends')}
-                  >Friends
-                  </Button>
+                <Button bsStyle={this.state.section === 'Friends' ? 'info' : 'default'}
+                        onClick={() => this.setSection('Friends')}
+                >Friends
+                </Button>
 
-                </ButtonGroup>
+              </ButtonGroup>
 
-                <EditGoal
-                  goal={this.state.editedGoal}
-                  show={this.state.showModal}
-                  onHide={this.closeModal}
-                  reloadGoals={this.loadData.bind(this, this.state.section)}
-                />
+              <EditGoal
+                goal={this.state.editedGoal}
+                show={this.state.showModal}
+                onHide={this.closeModal}
+                reloadGoals={this.loadData.bind(this, this.state.section)}
+              />
 
-              </div>
+            </div>
 
-              {newGoalButton}
-            </Col>
-          </Row>
+            {newGoalButton}
+          </Col>
+        </Row>
 
-          <Row className="GoalListPage-goals">
-            {goals}
-          </Row>
-        </Grid>
-      </Base>
+        <Row className="GoalListPage-goals">
+          {goals}
+        </Row>
+      </Grid>
     );
   }
 }

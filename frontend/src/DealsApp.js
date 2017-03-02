@@ -1,8 +1,8 @@
 import React from 'react';
 import { browserHistory, IndexRoute, Route, Router } from 'react-router';
-import Base from './containers/Base/index';
-import DealListPage from './containers/DealListPage/index';
-import DealPage from './containers/DealPage/index';
+import Base from './containers/Base';
+import DealListPage from './containers/DealListPage';
+import DealPage from './containers/DealPage';
 
 const DealsApp = () => (
   <Router history={browserHistory}>

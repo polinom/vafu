@@ -1,21 +1,16 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { browserHistory, IndexRoute, Route, Router } from 'react-router';
+import Base from './containers/Base';
+import GoalListPage from './containers/GoalListPage';
+import UserProfilePage from './containers/UserProfilePage';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
-}
+const App = () => (
+  <Router history={browserHistory}>
+    <Route path="/goals/" component={Base}>
+      <IndexRoute component={GoalListPage}/>
+      <Route path="/users/:username" component={UserProfilePage}/>
+    </Route>
+  </Router>
+);
 
 export default App;

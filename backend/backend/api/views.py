@@ -133,4 +133,14 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
         if pk == "current":
             return self.request.user
 
-        return super(UserViewSet, self).get_object()
+        # Allow to fetch users by `id`..
+        try:
+            obj = self.queryset.filter(id=pk)
+        except ValueError:
+            obj = None
+
+        # ..or by `username`
+        if not obj:
+            obj = self.queryset.filter(username=pk)
+
+        return obj.first()

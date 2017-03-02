@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Nav, Navbar, NavItem } from 'react-bootstrap';
 import './style.css';
 
 export default class NavHeader extends React.Component {
@@ -12,6 +12,9 @@ export default class NavHeader extends React.Component {
 
         <NavItem
           key="3"
+          id="id_current_user"
+          data-current-username={user.username}
+          data-current-userid={user.id}
           onClick={() => window.location.pathname = `/users/${user.username}/`}
           href={`/users/${user.username}/`}
         >

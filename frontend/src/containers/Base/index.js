@@ -2,6 +2,7 @@ import React from 'react';
 import './style.css';
 import NavHeader from '../../components/NavHeader';
 import { fetchCurrentUser } from '../../utils/requests';
+import Footer from '../../components/Footer';
 
 export default class Base extends React.Component {
 
@@ -40,10 +41,12 @@ export default class Base extends React.Component {
     const children = this.getChildren();
 
     return (
-      <div>
+      <div className="Base-container">
         <NavHeader user={user}/>
 
         {children}
+
+        <Footer />
       </div>
     )
   }

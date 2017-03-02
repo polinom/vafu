@@ -66,9 +66,10 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     goals = serializers.HyperlinkedRelatedField(view_name='api:goal-detail', many=True, read_only=True)
     favorite_deals = serializers.HyperlinkedRelatedField(view_name='api:favorite-detail', many=True, read_only=True)
 
-    followers_users = serializers.HyperlinkedRelatedField(view_name='api:follower-detail', many=True, read_only=True)
+    followers_users = FollowerSerializer(many=True, read_only=True)
     following_users = serializers.HyperlinkedRelatedField(view_name='api:follower-detail', many=True, read_only=True)
 
     class Meta:
         model = User
-        fields = ('id', 'url', 'username', 'favorite_deals', 'goals', 'followers_users', 'following_users')
+        fields = ('id', 'url', 'username', 'email', 'is_superuser',
+                  'favorite_deals', 'goals', 'followers_users', 'following_users')

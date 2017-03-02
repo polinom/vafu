@@ -1,0 +1,25 @@
+.UserProfilePage-smile {
+  font-size: 80px !important;
+  margin: 0 !important;
+}
+
+.UserProfilePage-green {
+  color: darkgreen;
+}
+
+.UserProfilePage-menu {
+  list-style: none;
+}
+
+.UserProfilePage-jumbotron {
+  min-height: 230px;
+}
+
+.UserProfilePage-btn {
+  margin: 0 3px;
+  background-image: none;
+}
+
+.UserProfilePage-buttons {
+  margin-bottom: 150px;
+}
