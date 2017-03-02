@@ -18,6 +18,10 @@ urlpatterns = [
     url(settings.ADMIN_URL, admin.site.urls),
 
     # User management
+
+    # User profile page is handled by React `Goals app`
+    url(r'^users/[\w.@+-]+/$', views.serve, kwargs={'path': 'index.html'}, name='profile'),
+
     url(r'^users/', include('backend.users.urls', namespace='users')),
     url(r'^accounts/', include('allauth.urls')),
 
