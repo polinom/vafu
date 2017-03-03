@@ -7,6 +7,7 @@ const ROUTES = {
   FOLLOWERS: '/api/followers/',
   GOALS: '/api/goals/',
   USERS: '/api/users/',
+  SAVE_PAYMENT: '/save-stripe-token/',
 };
 
 function request(config) {
@@ -30,6 +31,12 @@ function request(config) {
 
       if (config.hasOwnProperty('errorHandler')) config.errorHandler(resp);
     })
+}
+
+export function savePayment(data) {
+    const url = ROUTES.SAVE_PAYMENT
+    const method = 'POST'
+    return request({ method, url, data })
 }
 
 export function fetchCurrentUser() {

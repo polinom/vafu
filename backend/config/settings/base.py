@@ -65,6 +65,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     # custom users app
     'backend.users.apps.UsersConfig',
+    'backend.payment.apps.PaymentConfig',
 
     # Your stuff: custom apps go here
 
@@ -286,3 +287,5 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated'
     ],
 }
+
+STRIPE_PRIVAT_KEY = env('DJANGO_STRIPE_PRIVAT_KEY', default='sk_test_RDAR66Xk9XZsLgegjP2Dkk17')

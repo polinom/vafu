@@ -1,6 +1,7 @@
 import React from 'react';
 import * as requests from '../../utils/requests';
 import { Col, ControlLabel, Form, FormControl, FormGroup, Grid, Image, Jumbotron, Row } from 'react-bootstrap';
+import StripeCheckout from 'react-stripe-checkout';
 import './style.css';
 import FieldGroup from '../../components/FieldGroup/index';
 
@@ -10,6 +11,7 @@ export default class DealPage extends React.PureComponent {
     super();
 
     this.state = {
+      id: null,
       title: null,
       image: null,
       description: null,
@@ -18,6 +20,8 @@ export default class DealPage extends React.PureComponent {
       price: null,
       favorited_by_me: null,
     };
+
+    this.onToken = this.onToken.bind(this)
   }
 
   componentDidMount() {
@@ -30,6 +34,15 @@ export default class DealPage extends React.PureComponent {
       ...data
     });
   };
+
+  onToken(token){
+    console.log(token)
+    console.log(JSON.stringify(token))
+    token['dealId'] = this.state.id
+    requests.savePayment(JSON.stringify(token)).then(response => {
+     console.log(response)
+    })
+  }
 
   render() {
     return (
@@ -92,9 +105,13 @@ export default class DealPage extends React.PureComponent {
                     type="boolean"
                     label="Favorited by me"
                   />
-
                 </fieldset>
               </Form>
+              <StripeCheckout
+               token={this.onToken}
+               stripeKey="pk_test_TAIvO6Aw4G42SS6QNLIyvrwK"
+               amount={this.state.price * 100}
+               />
             </Jumbotron>
           </Col>
 

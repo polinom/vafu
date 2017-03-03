@@ -207,3 +207,6 @@ INSTALLED_APPS += ['raven.contrib.django.raven_compat', ]
 RAVEN_CONFIG = {
     'dsn': 'https://88012bdf1926481a933270efc77abdf3:7b8f301238f84b81990e065ee18e5503@sentry.io/141946',
 }
+
+ADMIN_URL = env('DJANGO_ADMIN_URL')
+

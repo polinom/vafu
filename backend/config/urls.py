@@ -10,6 +10,8 @@ from django.views.generic import TemplateView
 from django.views import defaults as default_views
 from django.contrib.staticfiles import views
 
+from backend.payment.views import save_stripe_token
+
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
@@ -38,6 +40,9 @@ urlpatterns = [
 
     # Goals React app
     url(r'^goals/$', views.serve, kwargs={'path': 'index.html'}, name='goals'),
+
+    # Payment app
+    url(r'^save-stripe-token/$', save_stripe_token, name='payment'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + staticfiles_urlpatterns()
 

@@ -48,3 +48,6 @@ redis>=2.10.5
 
 # REST API
 djangorestframework==3.5.4
+
+stripe
+
